@@ -1,58 +1,45 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Param,
-  Delete,
-} from '@nestjs/common';
+import { Controller } from '@nestjs/common';
 
 import { FlightService } from './flight.service';
 import { CreateFlightDto } from './dto/create-flight.dto';
 import { UpdateFlightDto } from './dto/update-flight.dto';
-
+import { MessagePattern, Payload } from '@nestjs/microservices';
+import { FlightMSG } from 'src/common/constanst';
 
 @Controller()
 export class FlightController {
-  constructor(
-    private readonly flightService: FlightService,
-  ) {}
+  constructor(private readonly flightService: FlightService) {}
 
-  @Post()
-  create(@Body() createFlightDto: CreateFlightDto) {
+  @MessagePattern(FlightMSG.CREATE)
+  create(@Payload() createFlightDto: CreateFlightDto) {
     return this.flightService.create(createFlightDto);
   }
 
-  @Get()
+  @MessagePattern(FlightMSG.FIND_ALL)
   findAll() {
     return this.flightService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
+  @MessagePattern(FlightMSG.FIND_ONE)
+  findOne(@Payload() id: string) {
     return this.flightService.findOne(id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateFlightDto: UpdateFlightDto) {
-    return this.flightService.update(id, updateFlightDto);
+  @MessagePattern(FlightMSG.UPDATE)
+  update(@Payload() payload: any) {
+    return this.flightService.update(payload.id, payload.updateFlightDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
+  @MessagePattern(FlightMSG.DELETE)
+  remove(@Payload() id: string) {
     return this.flightService.remove(id);
   }
 
-  // @Post(':flightId/passenger/:passengerId')
-  // @ApiOperation({summary:'relates a flight by flightId with a passenger by passengerId'})
-  // async addPassanger(
-  //   @Param('flightId') flightId: string,
-  //   @Param('passengerId') passengerId: string,
-  // ) {
-  //   const passenger = await this.passengerService.findOne(passengerId);
-  //   if (!passenger) throw new HttpException('Passenger Not Found', 401);
-
-  //   return this.flightService.addPassenger(flightId, passengerId)
-  // }
+  @MessagePattern(FlightMSG.ADD_PASSANGER)
+   addPassanger(@Payload() payload:any) {
+    return this.flightService.addPassenger(
+      payload.flightId,
+      payload.passengerId,
+    );
+  }
 }
