@@ -1,9 +1,8 @@
 import { Controller } from '@nestjs/common';
+import { MessagePattern, Payload } from '@nestjs/microservices';
 
 import { FlightService } from './flight.service';
 import { CreateFlightDto } from './dto/create-flight.dto';
-import { UpdateFlightDto } from './dto/update-flight.dto';
-import { MessagePattern, Payload } from '@nestjs/microservices';
 import { FlightMSG } from 'src/common/constanst';
 
 @Controller()

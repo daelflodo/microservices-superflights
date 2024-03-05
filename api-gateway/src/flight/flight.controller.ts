@@ -8,6 +8,7 @@ import {
   Delete,
   HttpException,
   HttpStatus,
+  UseGuards,
 } from '@nestjs/common';
 import { Observable } from 'rxjs';
 import { ApiTags } from '@nestjs/swagger';
@@ -17,13 +18,15 @@ import { CreateFlightDto } from './dto/create-flight.dto';
 import { IFlight } from 'src/common/interfaces/flight.interface';
 import { FlightMSG, PassengerMSG } from 'src/common/constanst';
 import { UpdateFlightDto } from './dto/update-flight.dto';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 
 
 @ApiTags('flights')
+@UseGuards(JwtAuthGuard)
 @Controller('/api/v2/flight')
 export class FlightController {
   constructor(private readonly clientProxy: ClientProxySuperFlights) {}
-  private _clientProxyFlight = this.clientProxy.clientProxyPassengers();
+  private _clientProxyFlight = this.clientProxy.clientProxyFlights();
   private _clientProxyPassenger = this.clientProxy.clientProxyPassengers();
 
   @Post()

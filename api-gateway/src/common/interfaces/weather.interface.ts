@@ -15,12 +15,27 @@ export interface IWeather {
   visibility: number | null;
   predictability: number;
 }
+
 export enum WeatherStateAbbr {
   C = 'c',
   Hc = 'hc',
-  LC = 'lc',
+  Lc = 'lc',
   Lr = 'lr',
   S = 's',
 }
-export enum WeatherStateName {}
-export enum WindDirectionCompass {}
+
+export enum WeatherStateName {
+  Clear = 'Clear',
+  HeavyCloud = 'Heavy Cloud',
+  LightCloud = 'Light Cloud',
+  LightRain = 'Light Rain',
+  Showers = 'Showers',
+}
+
+export enum WindDirectionCompass {
+  False = 'False',
+  N = 'N',
+  Nne = 'NNE',
+  Nw = 'NW',
+  Wsw = 'WSW',
+}

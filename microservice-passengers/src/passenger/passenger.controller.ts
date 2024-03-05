@@ -1,9 +1,8 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller } from '@nestjs/common';
+import { MessagePattern, Payload } from '@nestjs/microservices';
 
 import { PassengerService } from './passenger.service';
 import { CreatePassengerDto } from './dto/create-passenger.dto';
-import { UpdatePassengerDto } from './dto/update-passenger.dto';
-import { MessagePattern, Payload } from '@nestjs/microservices';
 import { PassengerMSG } from 'src/common/constanst';
 
 
@@ -12,7 +11,7 @@ export class PassengerController {
   constructor(private readonly passengerService: PassengerService) {}
 
 @MessagePattern(PassengerMSG.CREATE)
-  create(@Body() createPassengerDto: CreatePassengerDto) {
+  create(@Payload() createPassengerDto: CreatePassengerDto) {
     return this.passengerService.create(createPassengerDto);
   }
 

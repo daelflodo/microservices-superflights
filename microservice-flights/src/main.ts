@@ -1,7 +1,7 @@
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
 import { Transport } from '@nestjs/microservices';
-import { env } from 'process';
+
+import { AppModule } from './app.module';
 import { RabbitMQ } from './common/constanst';
 
 async function bootstrap() {
