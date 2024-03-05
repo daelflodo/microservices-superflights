@@ -9,6 +9,9 @@ async function bootstrap() {
     options: {
       urls:[process.env.AMQP_URL],
       queue: RabbitMQ.PassengerQueue,
+      // queueOptions:{
+      //   durable:false
+      // }
     }
   });
   await app.listen();
